@@ -35,33 +35,37 @@ module.exports = class Stats extends nmmes.Module {
 
             let output = _self.args.output;
 
-            if (!output.startsWith(Path.sep)) {
-                if (output.startsWith('.'+Path.sep)) {
-                    output = Path.resolve(process.cwd(), output);
-                } else {
-                    output = Path.resolve(_self.video.output.dir, output);
-                }
+
+            // Process output type
+            if (_self.args.type === 'csv') {
+                _self.parser = stringify({
+                    header: true,
+                    columns: _self.args.data
+                }).once('error', reject);
+            } else {
+                return reject(new Error('Unknown parser type.'));
             }
 
-            fs.ensureDir(Path.dirname(output)).then(() => {
-                _self.outputStream = fs.createWriteStream(output).once('error', reject).once('open', () => {
-                    // Process output type
-                    if (_self.args.type === 'csv') {
-                        _self.parser = stringify({
-                            header: true,
-                            columns: _self.args.data
-                        }).on('error', function(err) {
-                            Logger.error('Parser error:', err.message);
-                            Logger.trace(err);
-                        });
+            if (isStream(output)) { // Is a stream
+                _self.outputStream = output;
+                _self.parser.pipe(_self.outputStream);
+                resolve();
+            } else { // Is not a stream, hopefully a string...
+                if (!output.startsWith(Path.sep)) {
+                    if (output.startsWith('.' + Path.sep)) {
+                        output = Path.resolve(process.cwd(), output);
                     } else {
-                        return reject(new Error('Unknown parser type.'));
+                        output = Path.resolve(_self.video.output.dir, output);
                     }
+                }
 
-                    _self.parser.pipe(_self.outputStream);
-                    resolve();
-                });
-            }, reject);
+                fs.ensureDir(Path.dirname(output)).then(() => {
+                    _self.outputStream = fs.createWriteStream(output).once('error', reject).once('open', () => {
+                        _self.parser.pipe(_self.outputStream);
+                        resolve();
+                    });
+                }, reject);
+            }
 
         });
     }
