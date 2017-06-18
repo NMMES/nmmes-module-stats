@@ -55,6 +55,7 @@ new stats({
     */
     data: ['metadata.input.format.filename', 'metadata.input.format.bit_rate', 'reduction.percent', 'reduction.size']
     /*
+    This array contains a list of attributes you would like to record to the stats file.
     metadata.input...: Contains all possibilities from ffprobe -of json -show_streams -show_format /home/user/videos/video.mp4
     reduction.percent: Output file size as a percentage of the input file size
     reduction.size   : The actual change in size (in kilobytes)
