@@ -1,0 +1,26 @@
+{
+  "name": "nmmes-module-stats",
+  "version": "0.0.1",
+  "description": "NMMES stats module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/NMMES/nmmes-module-stats.git"
+  },
+  "author": "Ayrton Sparling",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "chalk": "^1.1.3",
+    "csv-stringify": "^1.0.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs-extra": "^3.0.1",
+    "isstream": "^0.1.2",
+    "lodash.get": "^4.4.2",
+    "moment": "^2.18.1",
+    "moment-duration-format": "^1.3.0"
+  }
+}
