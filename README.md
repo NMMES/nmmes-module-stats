@@ -1,11 +1,19 @@
 # NMMES-module-stats
+
 A statistics output module for nmmes-backend.
 
-### Dependencies
+## Dependencies
+
 - [nmmes-backend](https://github.com/NMMES/nmmes-backend) - Required in order to run this module.
 
+## Installation
+
+[![NPM](https://nodei.co/npm/nmmes-module-stats.png?compact=true)](https://nodei.co/npm/nmmes-module-stats/)
+
 ### Usage
+
 You will need to install the encoder module (`nmmes-module-encoder`) for this example.
+
 ```javascript
 import {Video, Logger} from 'nmmes-backend';
 import encoder from 'nmmes-module-encoder';
@@ -38,7 +46,9 @@ video.start();
 ```
 
 ### Options
+
 You may pass the stats class an optional options object.
+
 ```javascript
 new stats({
     type: 'csv', // Output type, only csv is currently supported
