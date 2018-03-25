@@ -12,8 +12,9 @@ const get = require('lodash.get');
 require("moment-duration-format");
 
 module.exports = class Stats extends nmmes.Module {
-    constructor(args) {
+    constructor(args, logger = Logger) {
         super(require('./package.json'));
+        this.logger = logger;
 
         this.options = Object.assign(nmmes.Module.defaults(Stats), args);
     }
