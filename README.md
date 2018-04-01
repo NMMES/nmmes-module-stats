@@ -30,7 +30,7 @@ Default: stats.csv
 The `--data` option determines which statistics should be stored in the statistics file.
 
 Type: Array<br>
-Default: metadata.input.format.filename time reduction.percent reduction.size
+Default: metadata.input.format.filename time reduction.percent reduction.size<br>
 Example: metadata.input.format.filename metadata.input.format.size metadata.output.format.size metadata.input.streams.0.codec_name
 
 ---
