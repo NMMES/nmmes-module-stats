@@ -1,8 +1,6 @@
 'use strict';
 
 const nmmes = require('nmmes-backend');
-const Logger = nmmes.Logger;
-const chalk = require('chalk');
 const stringify = require('csv-stringify');
 const isStream = require('isstream');
 const fs = require('fs-extra');
@@ -12,9 +10,8 @@ const get = require('lodash.get');
 require("moment-duration-format");
 
 module.exports = class Stats extends nmmes.Module {
-    constructor(args, logger = Logger) {
-        super(require('./package.json'));
-        this.logger = logger;
+    constructor(args, logger) {
+        super(require('./package.json'), logger);
 
         this.options = Object.assign(nmmes.Module.defaults(Stats), args);
     }
@@ -58,6 +55,7 @@ module.exports = class Stats extends nmmes.Module {
     async executable(map) {
         let results = await this.createOutput();
         let data = {
+            time: this.video.duration,
             metadata: {
                 input: this.video.input.metadata[0],
                 output: this.video.output.metadata,
@@ -75,6 +73,7 @@ module.exports = class Stats extends nmmes.Module {
 
         this.parser.write(outputData);
         this.parser.end();
+        return {};
     };
     static options() {
         return {
@@ -93,9 +92,8 @@ module.exports = class Stats extends nmmes.Module {
                 group: 'General:'
             },
             'data': {
-                default: ['metadata.input.format.filename', 'reduction.percent', 'reduction.size'],
-                describe: 'Data selections to include in the statistics file',
-                choices: ['metadata.input.format.filename', 'reduction.percent', 'reduction.size'],
+                default: ['metadata.input.format.filename', 'reduction.percent', 'reduction.size', 'time'],
+                describe: 'Data selections to include in the statistics file.',
                 type: 'array',
                 group: 'Advanced:'
             },
